@@ -16,26 +16,31 @@ $(document).ready(function() {
 	    var form = $(this);
 	    var query = $("#input_search").val();
 	    e.preventDefault();
-	    $.ajax({
-	        url: "http://imdb.wemakesites.net/api/search?q="+query,
-	        data: form.serialize(),
-	        crossDomain: true,
-	        dataType: "jsonp",
-	        success: function(data) {
-	            window.console.log(data);
-	            loadIdMovie('tt2850386', 0,  callBackActor, callBackDirector);
-	        }
-	    });
+	    
 	    
 	    /* if dropdown */
 	    var dropdown = $(".dropdown").val();
 	    if (dropdown == "Film") {
-	    	console.log("search film");
-	    	// TODO
+	    	$.ajax({
+		        url: "http://www.omdbapi.com/?t="+query+"&plot=short&r=json",
+		        crossDomain: true,
+		        dataType: "jsonp",
+		        success: function(data) {
+		        	loadIdMovie(data.imdbID, 0,  callBackActor, callBackDirector);
+		        }
+		    });
 	    }
 	    else {
 	    	console.log("serach acteur");
-	    	// TODO
+	    	$.ajax({
+		        url: "http://imdb.wemakesites.net/api/search?q="+query,
+		        data: form.serialize(),
+		        crossDomain: true,
+		        dataType: "jsonp",
+		        success: function(data) {
+		            var acteurs = data.results.names;
+		        }
+		    });
 	    	
 	    }
 	});
