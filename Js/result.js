@@ -23,3 +23,35 @@ $("form.search-imdb").submit( function(){
 	    });
 	}
 });
+
+$("#clear").click(function(){
+	sessionStorage.clear();
+});
+
+function matchIdAndNameActor(){
+
+	// Pour chaque film
+	$.each(sessionStorage, function(idMovie, movie){
+		if (idMovie.substring(0,2) == "tt"){
+			movie = jQuery.parseJSON(movie);
+			actors = movie.Actors.split(", ");
+			$.each(actors, function(key, actor){
+
+				// Pour chaque acteur
+				$.each(sessionStorage, function(idActor, actorSess){
+					console.log(idActor);
+					if (idActor.substring(0,2) == "nm"){
+						actorSess = jQuery.parseJSON(actorSess);
+						if (actor == actorSess.Title){
+							actors[key] = actorSess.Id;
+							movie.Actors = actors;
+							sessionStorage.setItem(idMovie, JSON.stringify(movie));
+						}
+					}
+				});
+			});
+		}
+		console.log(movie);
+	});	
+
+}

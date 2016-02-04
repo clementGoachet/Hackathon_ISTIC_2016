@@ -10,39 +10,60 @@
 	<link href="css/jquery-ui/jquery-ui.css" rel="stylesheet">
 	<!-- <link href="web/css/jquery-ui/jquery-mobile.css" rel="stylesheet"> -->
 	<link href="css/main.css" rel="stylesheet">
+	<link href="css/superslides.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		
     <title>IMDB</title>
  </head>
 
  <body>
-	<div class="container"> 
-		<div class="row">
-			<form class="form" name="search-imdb">
-				<div class="form-group">
-					<div class="col-sm-10 input_container">
-						<input type="text" class="form-control" name="search" id="film_search" placeholder="Entrez un film">
-						<input type="text" class="form-control" name="search" id="name_search" placeholder="Entrez le nom d'une personne">
+<!-- 	<div class="container">  -->
+
+<!-- 	</div> -->
+	
+	<!-- Test -->
+	<div id="slides">
+		<ul class="slides-container white_text ">
+			<li>
+				<img src="img/home_min.jpe" alt="">
+				<div class="container slides_content">
+					<div class="row">
+						<form class="form" name="search-imdb">
+							<div class="form-group">
+								<div class="col-sm-4 dropdown_container">
+									<select class="form-control dropdown" id="type">
+										<option>Film</option>
+										<option>Acteur</option>
+									</select>
+								</div>
+								<div class="col-sm-7 input_container">
+									<input type="text" class="form-control" name="search" id="film_search" placeholder="Entrez un film">
+								</div>
+								<div class="col-sm-1 btn_container">
+									<button id="submit" type="submit" class="pull-right search_btn btn transparent">Rechercher</button>
+								</div>
+							</div>
+						</form>
 					</div>
-					<div class="col-sm-2 btn_container">
-						<button id="submit" type="submit" class="btn transparent pull-right search_btn">Rechercher</button>
+					<div class="row">
+						<div class="col-sm-10">
+							<ul id="result">
+							</ul>
+						</div>
 					</div>
+					
 				</div>
-			</form>
-		</div>
-		<div class="row">
-			<div class="col-sm-10">
-				<ul id="result">
-				</ul>
-			</div>
-		</div>
+			</li>
+		</ul>
 	</div>
+	<!-- fin Test -->
 
     <script type="text/javascript" src="Js/bootstrap/jquery.js"></script>
 	<script type="text/javascript" src="Js/bootstrap/bootstrap.js"></script>
 	<script type="text/javascript" src="Js/jquery-ui/jquery-ui.js"></script>
 	<!-- <script type="text/javascript" src="web/js/jquery-ui/jquery-mobile.js"></script> -->
 	<script type="text/javascript" src="Js/main.js"></script>
+	<script type="text/javascript" src="Js/superslides.js"></script>
 	<script type="text/javascript" src="Js/result.js"></script>
   </body>
 </html>
