@@ -73,16 +73,29 @@
         var node = nodes.get(data.nodes[0]);
         console.log(node)
 
-        $.getJSON("http://imdb.wemakesites.net/api/"+ node.id_imdb, function(json) {
+/*        $.getJSON("http://imdb.wemakesites.net/api/"+ node.id_imdb, function(json) {
             var items = [];
             $.each( json, function( key, val ) {
             items.push( "<li id='" + key + "'>" + val + "</li>" );
         });
-
         $("#infos").html(items.join( "" ));
 
         console.log(json); // this will show the info it in firebug console
-    });
+         });*/
+
+        $.ajax({
+            url: "http://imdb.wemakesites.net/api/" + node.id_imdb,
+            crossDomain: true,
+            dataType: "jsonp",
+            success: function(data) {
+                console.log(data)
+                var items = [];
+                $.each( data.data, function( key, val ) {
+                    items.push("<li id='" + key + "'>" + val + "</li>");
+                });
+                $("#infos").html(items.join( "" ));
+            }
+        });
     });
 
 </script>
