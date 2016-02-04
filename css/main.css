@@ -1,0 +1,31 @@
+/* ------------------------- */
+/* Form */
+/* ------------------------- */
+
+/* search button */
+.btn.transparent {
+	border: solid 1px #D54F58;
+	background-color: transparent;
+	color: #D54F58;
+}
+
+.btn.red {
+	border: solid 1px transparent;
+	background-color: #D54F58;
+	color: white;
+}
+
+/* @media (min-width: 768px) { */
+/* 	.input_container { */
+/* 		padding-right: 30px !important; */
+/* 	} */
+/* } */
+
+/* xs devices */
+@media (max-width: 767px) {
+	.btn_container {
+		padding-top: 10px !important;
+		float: left !important;
+	}
+}
+
