@@ -72,7 +72,11 @@ function loadIdMovie(id, lvl, callbackActor, callbackDirector) {
 	        success: function(data) {
 	        	info = data;
 	        	film = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+info.Title+'", "Released": "'+info.Released+'", "Runtime": "'+info.Runtime+'", "Genre": "'+info.Genre+'", "Director": "'+info.Director+'", "Actors": "'+info.Actors+'"}');
-	        	$("#demo").append("<div class='film' id="+id+" meta-Title="+info.Title+" meta-Released="+info.Released+", "Runtime": "'+info.Runtime+'", "Genre": "'+info.Genre+'", "Director": "'+info.Director+'", "Actors": "'+info.Actors+'">");
+	        	
+	        	// test sessionStorage
+				sessionStorage.setItem(id,JSON.stringify(film)); // store data in browser storage
+	        	
+//	        	$("#demo").append("<div class='film' id="+id+" meta-Title="+info.Title+" meta-Released="+info.Released+", "Runtime": "'+info.Runtime+'", "Genre": "'+info.Genre+'", "Director": "'+info.Director+'", "Actors": "'+info.Actors+'">");
 	        	filmsJSON.push(film);
 	        	casts = info.Actors.split(", ");
 	        	$.each(casts, function(key, actor){
