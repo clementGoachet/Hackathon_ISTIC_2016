@@ -65,23 +65,22 @@ function loadIdName(id, lvl, callbackMovie) {
 	        crossDomain: true,
 	        dataType: "jsonp",
 	        success: function(data) {
-	        	console.log(data);
 	        	
 	        	films = data.data.filmography;
 	        	idFilms = [];
 	        	for (var i = 0; i <= 5; i++) {
 	        		idMovie = films[i].info.split("/")[4];
 	        		idFilms.push(idMovie);
-					loadIdMovie(idMovie, lvl, callBackActor, callBackDirector);
+					     loadIdMovie(idMovie, lvl, callBackActor, callBackDirector);
 	        	}
-	        	actor = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+data.data.title+'", "Image": "'+data.data.image+'", "Films":"'+idFilms+'"}');
+            var name = data.data.title.replace(/\(I*\)$/, '').trim();
+            console.log(name);
+	        	actor = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+name+'", "Image": "'+data.data.image+'", "Films":"'+idFilms+'"}');
 	        	
 	        	sessionStorage.setItem(id,JSON.stringify(actor)); // store data in browser storage
 	        }
 	    });
 	}
-
-	//console.log(personnes);
 }
 
 
@@ -94,12 +93,13 @@ function loadIdMovie(id, lvl, callbackActor, callbackDirector) {
 	        dataType: "jsonp",
 	        success: function(data) {
 	        	info = data;
-	        	film = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+info.Title+'", "Released": "'+info.Released+'", "Runtime": "'+info.Runtime+'", "Genre": "'+info.Genre+'", "Director": "'+info.Director+'", "Actors": "'+info.Actors+'"}');
+	        	film = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+info.Title+'", "Released": "'+info.Released+'", "Runtime": "'+info.Runtime+'", "Genre": "'+info.Genre+'", "Director": "'+info.Director+'", "Actors": "'+info.Actors+'", "Poster": "'+info.Poster+'"}');
 	        	
 	        	// test sessionStorage
 				sessionStorage.setItem(id,JSON.stringify(film)); // store data in browser storage
 	        	
 	        	casts = info.Actors.split(", ");
+            console.log(casts);
 	        	$.each(casts, function(key, actor){
 	        		callbackActor(actor, lvl, loadIdName);       		
 		        });
