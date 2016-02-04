@@ -56,12 +56,18 @@
     console.log("data")
     console.log(data)
 
-    var data2 = createGraphFromFilm("tt0072562");
+    var nodes = new vis.DataSet({});
+    var edges = new vis.DataSet({});
+
+/*    var data2 = createGraphFromFilm("tt0072562", nodes, edges);
     console.log("data2")
-    console.log(data2)
+    console.log(data2)*/
+
+    var data3 = createGraphFromActeur("nm0000115", nodes, edges);
+    console.log("data3", data3)
 
     // initialize your network!
-    var network = new vis.Network(container, data2, options);
+    var network = new vis.Network(container, data3, options);
 
 
     var options = {
@@ -82,19 +88,25 @@
     network.on("selectNode", function(data) {
         console.log(data)
         console.log(data.nodes[0])
-        var node = data2.nodes.get(data.nodes[0]);
-        console.log(node)
+        var node = data3.nodes.get(data.nodes[0]);
 
-        $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
-            var items = [];
-            var infos = getFilmInfos(json);
-            $.each( infos, function( key, val ) {
-                items.push( "<li id='" + key + "'>" + val + "</li>" );
-            });
-            $("#infos").html(items.join( "" ));
+        if(node.group == "films"){
 
-            console.log(json); // this will show the info it in firebug console
-         });
+            console.log("id", node.id_imdb)
+            var newData = createGraphFromFilm(node.id_imdb, nodes, edges);
+            network = new vis.Network(container, data3, options);
+
+            $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
+                var items = [];
+                var infos = getFilmInfos(json);
+                $.each( infos, function( key, val ) {
+                    items.push( "<li id='" + key + "'>" + val + "</li>" );
+                });
+                $("#infos").html(items.join( "" ));
+
+                console.log(json); // this will show the info it in firebug console
+             });
+        }
     });
 
 /*    network.on("hoverNode", function(data) {
