@@ -12,6 +12,8 @@
 
 $(document).ready(function() {
 
+	$(".pointer").hide();
+
 	$('form[name="search-imdb"]').submit(function(e){
 	    var form = $(this);
 	    var query = $("#film_search").val();
@@ -31,7 +33,7 @@ $(document).ready(function() {
 	    }
 	    else {
 	    	query = query.replace(/\s/g, '');
-	    	console.log("serach acteur");
+	    	console.log("search acteur");
 	    	$.ajax({
 		        url: "http://imdb.wemakesites.net/api/search?q="+query,
 		        data: form.serialize(),
@@ -40,14 +42,20 @@ $(document).ready(function() {
 		        success: function(data) {
 		            var acteurs = data.data.results.names;
 		            console.log(acteurs);
-		            
-		            $( ".actor_name" ).each(function( index ) {
-		        		$(this).html(acteurs[0].title);
+		            $(".pointer").show();
+		            $( ".pointer" ).each(function( index ) {
+		            	$(this).attr("id", acteurs[0].id);
+		        		$(this).find(".actor_name").html(acteurs[0].title);
 		        		acteurs.shift();
 		        	});
+
+		        	$(".pointer").click( function(){
+		        		//console.log($(this).attr('id'));
+		        		var id = $(this).attr('id');
+		        		loadIdName(id, 0,  callBackMovie);
+		        	});
 		        }
-		    });
-	    	
+		    });	    	
 	    }
 
 	    e.preventDefault();
