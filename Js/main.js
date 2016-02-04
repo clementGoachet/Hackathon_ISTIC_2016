@@ -1,11 +1,11 @@
 ﻿$(".search_btn").hover(
 		
 	function () {
-		$(this).removeClass("transparent");
-		$(this).addClass("red");
-	}, function() {
 		$(this).removeClass("red");
 		$(this).addClass("transparent");
+	}, function() {
+		$(this).removeClass("transparent");
+		$(this).addClass("red");
 	}
 		
 );
@@ -23,8 +23,21 @@ $(document).ready(function() {
 	        dataType: "jsonp",
 	        success: function(data) {
 	            window.console.log(data);
+	            loadIdMovie('tt2850386', 0,  callBackActor, callBackDirector);
 	        }
 	    });
+	    
+	    /* if dropdown */
+	    var dropdown = $(".dropdown").val();
+	    if (dropdown == "Film") {
+	    	console.log("search film");
+	    	// TODO
+	    }
+	    else {
+	    	console.log("serach acteur");
+	    	// TODO
+	    	
+	    }
 	});
 	
 	$(".dropdown").change(function() {

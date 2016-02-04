@@ -46,3 +46,40 @@
 		margin-bottom: 0px;
 	}
 }
+
+.btn {
+	width: 100%;
+}
+
+/* for xs devices */
+@media (max-width: 767px) {
+	.form-margin-top-xs {
+		margin-top: 15px;
+	}
+}
+
+/* RESULT */
+.result .item {
+	margin-bottom: 5px;
+	padding: 0 2.5px 0 2.5px;
+}
+.result .item div {
+	border: solid 1px white;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	padding: 15px 5px 15px 5px;
+	border-radius: 3px;
+}
+
+.white_background {
+	background: white;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.clear {
+	margin-top: 50px;
+}
