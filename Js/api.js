@@ -47,13 +47,18 @@ function loadIdName(id, lvl, callbackMovie) {
 	        crossDomain: true,
 	        dataType: "jsonp",
 	        success: function(data) {
-	        	actor = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+data.data.title+'", "Image": "'+data.data.image+'"}');
-	        	personnes.push(actor);
+	        	
+	        	
 	        	films = data.data.filmography;
+	        	idFilms = [];
 	        	for (var i = 0; i <= 5; i++) {
 	        		idMovie = films[i].info.split("/")[4];
+	        		idFilms.push(idMovie);
 					callbackMovie(idMovie, lvl, callBackActor, callBackDirector);
 	        	}
+	        	actor = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+data.data.title+'", "Image": "'+data.data.image+'", "Films":"'+idFilms+'"}');
+	        	
+	        	sessionStorage.setItem(id,JSON.stringify(actor)); // store data in browser storage
 	        }
 	    });
 	}
@@ -77,7 +82,6 @@ function loadIdMovie(id, lvl, callbackActor, callbackDirector) {
 				sessionStorage.setItem(id,JSON.stringify(film)); // store data in browser storage
 	        	
 //	        	$("#demo").append("<div class='film' id="+id+" meta-Title="+info.Title+" meta-Released="+info.Released+", "Runtime": "'+info.Runtime+'", "Genre": "'+info.Genre+'", "Director": "'+info.Director+'", "Actors": "'+info.Actors+'">");
-	        	filmsJSON.push(film);
 	        	casts = info.Actors.split(", ");
 	        	$.each(casts, function(key, actor){
 	        		//console.log(actor);
