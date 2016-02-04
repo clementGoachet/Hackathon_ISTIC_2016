@@ -16,36 +16,67 @@ function getFilmInfos(json) {
 
 function createGraphFromFilm(idFilm) {
     // id en mode numérique pour les nodes
-    var idFilmNum = Number(idFilm.replace( /^\D+/g, ''));
+    var idFilmNum = idFilm.substring(3);
     var nodes_data = [];
     var edges_data = [];
 
     var jsonStringFilm = sessionStorage.getItem(idFilm);
-    var film = JSON.parse(jsonString);
-    console.log(film)
+    var film = JSON.parse(jsonStringFilm);
 
-    nodes_data.push({
-        id: idFilmNum,
-        group: 'films',
-        label: film.Title,
-        shape: 'circularImage',
-        image: film.Poster
-    });
+    if(film.Poster !== undefined) {
+        nodes_data.push({
+            id: idFilmNum,
+            id_imdb: film.Id,
+            group: 'films',
+            label: film.Title,
+            shape: 'circularImage',
+            image: film.Poster
+        });
+    }
+    else {
+        nodes_data.push({
+            id: idFilmNum,
+            id_imdb: film.Id,
+            group: 'films',
+            label: film.Title,
+        });
+    }
 
-    console.log(nodes_data)
     // noeuds des acteurs
-    $.each(film.Actors, function(key, idActeur) {
-        var idActeurNum = Number(idActeur.replace( /^\D+/g, ''));
+    var actors = film.Actors.split(", ");
+    $.each(actors, function(key, idActeur) {
+        var idActeurNum = idActeur.substring(2);
+
+        if(!(/^\d+$/.test(idActeurNum))) {
+            return;
+        }
         var jsonStringActeur = sessionStorage.getItem(idActeur);
         var acteur = JSON.parse(jsonStringActeur);
 
-        nodes_data.push({
-            id: idActeurNum,
-            group: "acteurs",
-            label: acteur.Title,
-            shape: 'circularImage',
-            image: acteur.Image
+        // création du node acteur
+        if(acteur.Image !== undefined) {
+            nodes_data.push({
+                id: idActeurNum,
+                group: "acteurs",
+                label: acteur.Title,
+                shape: 'circularImage',
+                image: acteur.Image
+            });
+        }
+        else {
+            nodes_data.push({
+                id: idActeurNum,
+                group: "acteurs",
+                label: acteur.Title
+            });
+        }
+
+        // création des films pour chaque acteur
+        $.each(acteur.Films, function(key, idFilmActeur) {
+            var idFilmActeurNum = idFilmActeur.substring(3);
+
         });
+
         edges_data.push({
             from: idFilmNum,
             to: idActeurNum

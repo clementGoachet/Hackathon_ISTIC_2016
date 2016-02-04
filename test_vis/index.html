@@ -1,7 +1,7 @@
 <html>
 <head>
     <script type="text/javascript" src="../Js/vis_tools.js"></script>
-    <script type="text/javascript" src="../Js/Vis/dist/vis.min.js"></script>
+    <script type="text/javascript" src="../Js/Vis/dist/vis.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <link href="../Js/Vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
 
@@ -30,7 +30,7 @@
     // create an array with nodes
     var nodes = new vis.DataSet([
         {id: 1, group:'myGroup', label: 'Node 1'},
-        {id: 2, id_imdb:"tt0110912", label: 'Pulp fiction', shape: 'circularImage', image: "http://ia.media-imdb.com/images/M/MV5BMTkxMTA5OTAzMl5BMl5BanBnXkFtZTgwNjA5MDc3NjE@._V1_SX300.jpg", borderWidth: 3},
+        {id: 2, id_imdb:"tt0110912", label: 'Pulp fiction', shape: 'circularImage', image: "http://ia.media-imdb.com/images/M/MV5BMTUzMDM4Nzk2MV5BMl5BanBnXkFtZTcwNTcwNjExOQ@@._V1_UY317_CR1,0,214,317_AL_.jpg", borderWidth: 3},
         {id: 3, label: 'Node 3'},
         {id: 4, label: 'Node 4'},
         {id: 5, group:'myGroup', label: 'Node 5'}
@@ -53,10 +53,15 @@
         edges: edges
     };
 
+    console.log("data")
+    console.log(data)
+
     var data2 = createGraphFromFilm("tt0072562");
+    console.log("data2")
+    console.log(data2)
 
     // initialize your network!
-    var network = new vis.Network(container, data, options);
+    var network = new vis.Network(container, data2, options);
 
 
     var options = {
@@ -67,7 +72,8 @@
       interaction:{hover:true},
       clickToUse: false,
           groups: {
-            myGroup: {color:{background:'red'}, borderWidth:3}
+            films: {color:{background:'red'}, borderWidth:3},
+            acteurs: {color:{background:'blue'}, borderWidth:3}
           }
     }
 
@@ -75,7 +81,8 @@
 
     network.on("selectNode", function(data) {
         console.log(data)
-        var node = nodes.get(data.nodes[0]);
+        console.log(data.nodes[0])
+        var node = data2.nodes.get(data.nodes[0]);
         console.log(node)
 
         $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
