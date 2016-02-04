@@ -5,7 +5,15 @@
 
     <style type="text/css">
         #mynetwork {
+            display: inline-block;
             width: 600px;
+            height: 400px;
+            border: 1px solid lightgray;
+        }
+        
+        #infos {
+            display: inline-block;
+            width: 400px;
             height: 400px;
             border: 1px solid lightgray;
         }
@@ -14,11 +22,14 @@
 <body>
 <div id="mynetwork"></div>
 
+<div id="infos"></div>
+
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     // create an array with nodes
     var nodes = new vis.DataSet([
         {id: 1, group:'myGroup', label: 'Node 1'},
-        {id: 2, label: 'Node 2', shape: 'circularImage', image: "http://ia.media-imdb.com/images/M/MV5BMTkxMTA5OTAzMl5BMl5BanBnXkFtZTgwNjA5MDc3NjE@._V1_SX300.jpg", borderWidth: 3},
+        {id: 2, id_imdb:"tt0110912", label: 'Pulp fiction', shape: 'circularImage', image: "http://ia.media-imdb.com/images/M/MV5BMTkxMTA5OTAzMl5BMl5BanBnXkFtZTgwNjA5MDc3NjE@._V1_SX300.jpg", borderWidth: 3},
         {id: 3, label: 'Node 3'},
         {id: 4, label: 'Node 4'},
         {id: 5, group:'myGroup', label: 'Node 5'}
@@ -28,7 +39,7 @@
     var edges = new vis.DataSet([
         {from: 1, to: 3},
         {from: 1, to: 2},
-        {from: 2, to: 4},
+        {from: 1, to: 4},
         {from: 2, to: 5}
     ]);
 
@@ -40,7 +51,6 @@
         nodes: nodes,
         edges: edges
     };
-    var options = {};
 
     // initialize your network!
     var network = new vis.Network(container, data, options);
@@ -57,7 +67,24 @@
           }
     }
 
-network.setOptions(options);
+    network.setOptions(options);
+
+    network.on("selectNode", function(data) {
+        var node = nodes.get(data.nodes[0]);
+        console.log(node)
+
+        $.getJSON("http://imdb.wemakesites.net/api/"+ node.id_imdb, function(json) {
+            var items = [];
+            $.each( json, function( key, val ) {
+            items.push( "<li id='" + key + "'>" + val + "</li>" );
+        });
+
+        $("#infos").html(items.join( "" ));
+
+        console.log(json); // this will show the info it in firebug console
+    });
+    });
+
 </script>
 </body>
 </html>
