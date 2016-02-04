@@ -13,18 +13,13 @@
 $(document).ready(function() {
 
 	$('form[name="search-imdb"]').submit(function(e){
-		console.log("kjfd");
 	    var form = $(this);
-	    var query = $("#input_search").val();
-	    query = query.replace(/\s/g, '');
-	    e.preventDefault();
+	    var query = $("#film_search").val();
 	    
 	    
 	    /* if dropdown */
 	    var dropdown = $(".dropdown").val();
-	    console.log(dropdown);
 	    if (dropdown == "Film") {
-	    	console.log('okok');
 	    	$.ajax({
 		        url: "http://www.omdbapi.com/?t="+query+"&plot=short&r=json",
 		        crossDomain: true,
@@ -35,6 +30,7 @@ $(document).ready(function() {
 		    });
 	    }
 	    else {
+	    	query = query.replace(/\s/g, '');
 	    	console.log("serach acteur");
 	    	$.ajax({
 		        url: "http://imdb.wemakesites.net/api/search?q="+query,
@@ -42,11 +38,14 @@ $(document).ready(function() {
 		        crossDomain: true,
 		        dataType: "jsonp",
 		        success: function(data) {
-		            var acteurs = data.results.names;
+		            var acteurs = data.data.results.names;
+		            console.log(acteurs);
 		        }
 		    });
 	    	
 	    }
+
+	    e.preventDefault();
 	});
 	
 	$(".dropdown").change(function() {
