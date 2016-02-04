@@ -92,8 +92,7 @@
 
         if(node.group == "films"){
 
-            console.log("id", node.id_imdb)
-            var newData = createGraphFromFilm(node.id_imdb, nodes, edges);
+            var newData = createGraphFromFilm(node.Id, nodes, edges);
             network = new vis.Network(container, data3, options);
 
             $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
