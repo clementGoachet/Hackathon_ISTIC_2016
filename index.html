@@ -21,14 +21,20 @@
 			<form class="form" name="search-imdb">
 				<div class="form-group">
 					<div class="col-sm-10 input_container">
-						<input type="text" class="form-control" name="search" id="input_search" placeholder="Entrez un film">
+						<input type="text" class="form-control" name="search" id="film_search" placeholder="Entrez un film">
+						<input type="text" class="form-control" name="search" id="name_search" placeholder="Entrez le nom d'une personne">
 					</div>
 					<div class="col-sm-2 btn_container">
 						<button id="submit" type="submit" class="btn transparent pull-right search_btn">Rechercher</button>
 					</div>
-
 				</div>
 			</form>
+		</div>
+		<div class="row">
+			<div class="col-sm-10">
+				<ul id="result">
+				</ul>
+			</div>
 		</div>
 	</div>
 
@@ -37,5 +43,6 @@
 	<script type="text/javascript" src="Js/jquery-ui/jquery-ui.js"></script>
 	<!-- <script type="text/javascript" src="web/js/jquery-ui/jquery-mobile.js"></script> -->
 	<script type="text/javascript" src="Js/main.js"></script>
+	<script type="text/javascript" src="Js/result.js"></script>
   </body>
 </html>
