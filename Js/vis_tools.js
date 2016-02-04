@@ -14,6 +14,9 @@ function getFilmInfos(json) {
     return result;
 }
 
+function createGrpah(json) {
+
+}
 
 function createFilmInfosHtml(json) {
     var infos = getFilmInfos(json);
