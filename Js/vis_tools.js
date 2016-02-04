@@ -20,45 +20,37 @@ function createGraphFromFilm(idFilm) {
     var nodes_data = [];
     var edges_data = [];
 
-    $.ajax({
-        type: "get",
-        url: "../json/films_test.json",
-        datatype: "json",
-        success: function (data) {
-            console.log(data.data);
-        },
-       //add this error handler you'll get alert
-        error: function (request, status, error) {
-            alert(request.responseText);
-        }
-    });
-    $.getJSON("../json/films_test.json", function (data) {
-        console.log("in")
+    var jsonStringFilm = sessionStorage.getItem(idFilm);
+    var film = JSON.parse(jsonString);
+    console.log(film)
+
+    nodes_data.push({
+        id: idFilmNum,
+        group: 'films',
+        label: film.Title,
+        shape: 'circularImage',
+        image: film.Poster
     });
 
-/*                    nodes_data.push({
-                        id: idFilmNum,
-                        group: 'films',
-                        label: film.Title,
-                        shape: 'circularImage',
-                        image: film.Poster
-                    });
+    console.log(nodes_data)
+    // noeuds des acteurs
+    $.each(film.Actors, function(key, idActeur) {
+        var idActeurNum = Number(idActeur.replace( /^\D+/g, ''));
+        var jsonStringActeur = sessionStorage.getItem(idActeur);
+        var acteur = JSON.parse(jsonStringActeur);
 
-                    console.log(nodes_data)
-
-                    // noeuds des acteurs
-                    $.each(film.Actors, function(key, acteur) {
-                        var idActeurNum = Number(acteur.replace( /^\D+/g, ''));
-
-                        nodes_data.push({
-                            id: idActeurNum,
-                        });
-
-                        edges_data.push({
-                            from: idFilmNum,
-                            to: idActeurNum
-                        });
-                    });*/
+        nodes_data.push({
+            id: idActeurNum,
+            group: "acteurs",
+            label: acteur.Title,
+            shape: 'circularImage',
+            image: acteur.Image
+        });
+        edges_data.push({
+            from: idFilmNum,
+            to: idActeurNum
+        });
+    });
 
     var nodes = new vis.DataSet(nodes_data);
     var edges = new vis.DataSet(edges_data);
