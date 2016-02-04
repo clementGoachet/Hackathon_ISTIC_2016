@@ -1,6 +1,8 @@
 <html>
 <head>
+    <script type="text/javascript" src="../Js/vis_tools.js"></script>
     <script type="text/javascript" src="../Js/Vis/dist/vis.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <link href="../Js/Vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
@@ -24,7 +26,6 @@
 
 <div id="infos"></div>
 
-<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
 <script type="text/javascript">
     // create an array with nodes
     var nodes = new vis.DataSet([
@@ -61,6 +62,7 @@
       height: '100%',
       width: '100%',
       locale: 'en',
+      interaction:{hover:true},
       clickToUse: false,
           groups: {
             myGroup: {color:{background:'red'}, borderWidth:3}
@@ -70,33 +72,39 @@
     network.setOptions(options);
 
     network.on("selectNode", function(data) {
+        console.log(data)
         var node = nodes.get(data.nodes[0]);
         console.log(node)
 
-/*        $.getJSON("http://imdb.wemakesites.net/api/"+ node.id_imdb, function(json) {
+        $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
             var items = [];
-            $.each( json, function( key, val ) {
-            items.push( "<li id='" + key + "'>" + val + "</li>" );
-        });
-        $("#infos").html(items.join( "" ));
+            var infos = getFilmInfos(json);
+            $.each( infos, function( key, val ) {
+                items.push( "<li id='" + key + "'>" + val + "</li>" );
+            });
+            $("#infos").html(items.join( "" ));
 
-        console.log(json); // this will show the info it in firebug console
-         });*/
-
-        $.ajax({
-            url: "http://imdb.wemakesites.net/api/" + node.id_imdb,
-            crossDomain: true,
-            dataType: "jsonp",
-            success: function(data) {
-                console.log(data)
-                var items = [];
-                $.each( data.data, function( key, val ) {
-                    items.push("<li id='" + key + "'>" + val + "</li>");
-                });
-                $("#infos").html(items.join( "" ));
-            }
-        });
+            console.log(json); // this will show the info it in firebug console
+         });
     });
+
+/*    network.on("hoverNode", function(data) {
+        console.log(data.node)
+        var node = nodes.get(data.node);
+        console.log(node)
+        $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
+            var items = [];
+            var infos = getFilmInfos(json);
+            $.each( infos, function( key, val ) {
+                items.push( "<li id='" + key + "'>" + val + "</li>" );
+            });
+            $("#infos").css("display", "block");
+            $("#infos").html(items.join( "" ));
+
+            console.log(json); // this will show the info it in firebug console
+         });
+
+    });*/
 
 </script>
 </body>
