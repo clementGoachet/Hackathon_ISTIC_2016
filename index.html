@@ -36,22 +36,29 @@
 										<option>Acteur</option>
 									</select>
 								</div>
-								<div class="col-sm-7 input_container">
-									<input type="text" class="form-control" name="search" id="film_search" placeholder="Entrez un film">
+								<div class="col-sm-6 input_container">
+									<input type="text" class="form-control form-margin-top-xs" name="search" id="film_search" placeholder="Entrez un film">
 								</div>
-								<div class="col-sm-1 btn_container">
-									<button id="submit" type="submit" class="pull-right search_btn btn transparent">Rechercher</button>
+								<div class="col-xs-offset-5 col-sm-offset-0 col-sm-2 btn_container">
+									<button id="submit" type="submit" class=" search_btn btn red">Rechercher</button>
 								</div>
 							</div>
 						</form>
 					</div>
+					
+					<div class="clear"></div>
+					
 					<div class="row">
-						<div class="col-sm-10">
-							<ul id="result">
-							</ul>
+						<div class="col-sm-12 result">
+							<div class="item col-xs-4 col-sm-3 col-md-2 col-md-offset-2">
+								<div class="pointer real_item">
+									<span></span>
+									<br /><br />
+									<span class="white_text">Name</span>
+								</div>
+						</div>
 						</div>
 					</div>
-					
 				</div>
 			</li>
 		</ul>
@@ -62,6 +69,7 @@
 	<script type="text/javascript" src="Js/bootstrap/bootstrap.js"></script>
 	<script type="text/javascript" src="Js/jquery-ui/jquery-ui.js"></script>
 	<!-- <script type="text/javascript" src="web/js/jquery-ui/jquery-mobile.js"></script> -->
+	<script type="text/javascript" src="Js/api.js"></script>
 	<script type="text/javascript" src="Js/main.js"></script>
 	<script type="text/javascript" src="Js/superslides.js"></script>
 	<script type="text/javascript" src="Js/result.js"></script>

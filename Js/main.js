@@ -1,30 +1,52 @@
 ﻿$(".search_btn").hover(
 		
 	function () {
-		$(this).removeClass("transparent");
-		$(this).addClass("red");
-	}, function() {
 		$(this).removeClass("red");
 		$(this).addClass("transparent");
+	}, function() {
+		$(this).removeClass("transparent");
+		$(this).addClass("red");
 	}
 		
 );
 
 $(document).ready(function() {
 
-	$('form[name="search-imdb"]').on("submit", function(e) {
+	$('form[name="search-imdb"]').submit(function(e){
+		console.log("kjfd");
 	    var form = $(this);
 	    var query = $("#input_search").val();
+	    query = query.replace(/\s/g, '');
 	    e.preventDefault();
-	    $.ajax({
-	        url: "http://imdb.wemakesites.net/api/search?q="+query,
-	        data: form.serialize(),
-	        crossDomain: true,
-	        dataType: "jsonp",
-	        success: function(data) {
-	            window.console.log(data);
-	        }
-	    });
+	    
+	    
+	    /* if dropdown */
+	    var dropdown = $(".dropdown").val();
+	    console.log(dropdown);
+	    if (dropdown == "Film") {
+	    	console.log('okok');
+	    	$.ajax({
+		        url: "http://www.omdbapi.com/?t="+query+"&plot=short&r=json",
+		        crossDomain: true,
+		        dataType: "jsonp",
+		        success: function(data) {
+		        	loadIdMovie(data.imdbID, 0,  callBackActor, callBackDirector);
+		        }
+		    });
+	    }
+	    else {
+	    	console.log("serach acteur");
+	    	$.ajax({
+		        url: "http://imdb.wemakesites.net/api/search?q="+query,
+		        data: form.serialize(),
+		        crossDomain: true,
+		        dataType: "jsonp",
+		        success: function(data) {
+		            var acteurs = data.results.names;
+		        }
+		    });
+	    	
+	    }
 	});
 	
 	$(".dropdown").change(function() {
