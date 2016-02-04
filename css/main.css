@@ -83,3 +83,11 @@
 .clear {
 	margin-top: 50px;
 }
+
+.item {
+	margin-top: 20px;
+}
+
+.result .item div:hover {
+
+}

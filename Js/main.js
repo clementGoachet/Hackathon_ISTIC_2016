@@ -40,6 +40,11 @@ $(document).ready(function() {
 		        success: function(data) {
 		            var acteurs = data.data.results.names;
 		            console.log(acteurs);
+		            
+		            $( ".actor_name" ).each(function( index ) {
+		        		$(this).html(acteurs[0].title);
+		        		acteurs.shift();
+		        	});
 		        }
 		    });
 	    	
@@ -61,4 +66,7 @@ $(document).ready(function() {
 	);
 	
 	$(window).trigger('resize').trigger('scroll'); /* refresh sizing */
+	
+	
+	
 });
