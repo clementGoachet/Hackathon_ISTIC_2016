@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>AJAX</h2>
+
+<button type="button" onclick="loadDoc()">Request data</button>
+
+<p id="demo"></p>
+
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      document.getElementById("demo").innerHTML = xhttp.responseText;
+    }
+  };
+  xhttp.open("GET", "http://imdb.wemakesites.net/api/nm0000115", true);
+  //xhttp.open("GET", "http://www.omdbapi.com/?t=big+fish&y=&plot=short&r=json", true);
+  xhttp.send();
+}
+</script>
+
+</body>
+</html>
