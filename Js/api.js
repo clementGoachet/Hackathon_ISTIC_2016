@@ -82,6 +82,10 @@ function loadIdName(id, lvl, callbackMovie) {
 	        	actor = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+name+'", "Image": "'+data.data.image+'", "Films":"'+idFilms+'"}');
 	        	
 	        	sessionStorage.setItem(id,JSON.stringify(actor)); // store data in browser storage
+	        	
+	        	setTimeout(function() {
+	        		$("#generate").show();
+	        	},5000);
 	        }
 	    });
 	}
