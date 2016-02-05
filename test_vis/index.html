@@ -13,6 +13,7 @@
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <link href="../Js/Vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
     <link href="../css/main.css" rel="stylesheet" type="text/css" />
+    <link href="../css/bootstrap/bootstrap.css" rel="stylesheet">
 
     <style type="text/css">
         #mynetwork {
@@ -36,11 +37,8 @@
 <div id="infos"></div>
 <script type="text/javascript" src="../Js/result.js"></script>
 <script type="text/javascript">
-$(this).ajaxComplete(function(){
-    setTimeout(function(){
-        createNodes();
-    }, 20000);
-
+$(this).ajaxStop(function(){
+    createNodes();
 });
 
 function createNodes() {
