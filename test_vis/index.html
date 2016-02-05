@@ -93,18 +93,15 @@ function createNodes() {
 
     var data3 = createGraphFromActeur("nm0000619", nodes, edges);
 
-    nodesCleaned = nodes;
+    //nodesCleaned = nodes;
     $.each(nodes, function(k, v){
-        var linked = false;
         $.each(edges, function(j, i){
             if (i.to == k || i.from == k){
-                linked = true;
+                nodes.remove(k);
             }
         });
-        if (!linked){
-            nodesCleaned[k].shift();
-        }
     });
+    //nodes = nodesCleaned;
     // initialize your network!
     var network = new vis.Network(container, data3, options);
 
@@ -152,12 +149,9 @@ function createNodes() {
         var node = data3.nodes.get(data.nodes[0]);
         console.log(node)
 
-        if(node.group == "films"){
+        if(node.group == "films_img" || node.group == "films_icn"){
 
-            var newData = createGraphFromFilm(node.Id, nodes, edges);
-            network = new vis.Network(container, data3, options);
-
-            $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
+            $.getJSON("http://www.omdbapi.com/?i=" + node.id + "&plot=short&r=json", function(json) {
                 var items = [];
                 var infos = getFilmInfos(json);
                 $.each( infos, function( key, val ) {
