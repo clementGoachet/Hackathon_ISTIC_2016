@@ -35,6 +35,11 @@
 <div id="infos"></div>
 <script type="text/javascript" src="../Js/result.js"></script>
 <script type="text/javascript">
+$(this).ajaxComplete(function(){
+    setTimeout(function(){
+        createNodes();
+    }, 4000);
+});
 
 function createNodes() {
     matchIdAndNameActor();
@@ -54,17 +59,9 @@ function createNodes() {
         nodesArray.push(JSON.parse(node));
     });
     var nodes = new vis.DataSet(nodesArray);
-    console.log(nodes);
 
     // create an array with nodes
-/*    var nodes = new vis.DataSet([
-        {id: 1, group:'myGroup', label: 'Node 1'},
-        {id: 2, id_imdb:"tt0110912", label: 'Pulp fiction', shape: 'circularImage', image: "http://ia.media-imdb.com/images/M/MV5BMTUzMDM4Nzk2MV5BMl5BanBnXkFtZTcwNTcwNjExOQ@@._V1_UY317_CR1,0,214,317_AL_.jpg", borderWidth: 3},
-        {id: 3, label: 'Node 3'},
-        {id: 4, label: 'Node 4'},
-        {id: 5, group:'myGroup', label: 'Node 5'}
-    ]);
-    console.log(nodes);*/
+
 
     // create an array with edges
     var edges = new vis.DataSet([
@@ -83,9 +80,6 @@ function createNodes() {
         edges: edges
     };
 
-    console.log("data")
-    console.log(data)
-
     var nodes = new vis.DataSet({});
     var edges = new vis.DataSet({});
 
@@ -96,7 +90,6 @@ function createNodes() {
     //var data3 = createGraphFromActeur("nm0000115", nodes, edges);
 
     var data3 = createGraphFromActeur("nm0000619", nodes, edges);
-    console.log("data3", data3)
 
     // initialize your network!
     var network = new vis.Network(container, data3, options);
@@ -135,7 +128,6 @@ function createNodes() {
                 });
                 $("#infos").html(items.join( "" ));
 
-                console.log(json); // this will show the info it in firebug console
              });
         }
     });
