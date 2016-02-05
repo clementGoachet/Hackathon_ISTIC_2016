@@ -39,7 +39,8 @@
 $(this).ajaxComplete(function(){
     setTimeout(function(){
         createNodes();
-    }, 4000);
+    }, 20000);
+
 });
 
 function createNodes() {
@@ -92,6 +93,18 @@ function createNodes() {
 
     var data3 = createGraphFromActeur("nm0000619", nodes, edges);
 
+    nodesCleaned = nodes;
+    $.each(nodes, function(k, v){
+        var linked = false;
+        $.each(edges, function(j, i){
+            if (i.to == k || i.from == k){
+                linked = true;
+            }
+        });
+        if (!linked){
+            nodesCleaned[k].shift();
+        }
+    });
     // initialize your network!
     var network = new vis.Network(container, data3, options);
 
@@ -156,24 +169,9 @@ function createNodes() {
         }
     });
 
-/*    network.on("hoverNode", function(data) {
-        console.log(data.node)
-        var node = nodes.get(data.node);
-        console.log(node)
-        $.getJSON("http://www.omdbapi.com/?i=" + node.id_imdb + "&plot=short&r=json", function(json) {
-            var items = [];
-            var infos = getFilmInfos(json);
-            $.each( infos, function( key, val ) {
-                items.push( "<li id='" + key + "'>" + val + "</li>" );
-            });
-            $("#infos").css("display", "block");
-            $("#infos").html(items.join( "" ));
 
-            console.log(json); // this will show the info it in firebug console
-         });
-
-    });*/
 }
+
 </script>
 </body>
 </html>
