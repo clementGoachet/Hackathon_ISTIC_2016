@@ -34,7 +34,10 @@ function matchIdAndNameActor(){
 	$.each(sessionStorage, function(idMovie, movie){
 		if (idMovie.substring(0,2) == "tt"){
 			movie = jQuery.parseJSON(movie);
-			actors = movie.Actors.split(", ");
+			actors = movie.Actors;
+			if (!$.isArray(actors)){
+                actors = actors.split(",");
+            }
 			$.each(actors, function(key, actor){
 
 				// Pour chaque acteur
@@ -51,7 +54,6 @@ function matchIdAndNameActor(){
 				});
 			});
 		}
-		console.log(movie);
 	});	
 
 }

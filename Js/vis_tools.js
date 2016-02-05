@@ -129,7 +129,92 @@ function createGraphFromFilm(idFilm, nodes, edges) {
     }
 }
 
+
 function createGraphFromActeur(idActeur, nodes, edges) {
+
+    $.each(sessionStorage, function(key, value){
+        var newNode = JSON.parse(value);
+
+        // Créer les nodes personnes
+       if (key.substring(0,2) == 'nm') {
+
+           if(!nodes.get(key)) {
+                if(newNode.Image !== undefined) {
+                    nodes.add({
+                        id: key,
+                        group: "acteurs",
+                        label: newNode.Title,
+                        shape: 'circularImage',
+                        image: newNode.Image
+                    });
+                } else {
+                    nodes.add({
+                        id: key,
+                        group: "acteurs",
+                        label: newNode.Title
+                    });
+                }
+            }
+
+            // Créer les nodes
+
+            var filmsDe = newNode.Films;
+            if (!$.isArray(filmsDe)){
+                filmsDe = filmsDe.split(",");
+            }
+            
+            $.each(filmsDe, function(k, idFilmActeur){
+                edges.add({
+                    from: key,
+                    to: idFilmActeur
+                });
+            });
+
+        // Les nodes des films
+        } else {
+            console.log(newNode);
+            if(!nodes.get(key)) {
+                if(newNode.Poster !== undefined) {
+                    nodes.add({
+                        id: key,
+                        group: "films",
+                        label: newNode.Title,
+                        shape: 'circularImage',
+                        image: newNode.Poster
+                    });
+                } else {
+                    nodes.add({
+                        id: key,
+                        group: "films",
+                        label: newNode.Title
+                    });
+                }
+            }
+             // Créer les nodes
+            var ActeursDans = newNode.Actors;
+            if (!$.isArray(ActeursDans)){
+                ActeursDans = ActeursDans.split(",");
+            }
+            $.each(ActeursDans, function(j, idActeurFilm){
+
+                // Si l'id de l'acteur est défini
+                if (idActeurFilm.substring(/^nm[0-9]/)){
+                    edges.add({
+                        from: j,
+                        to: idActeurFilm
+                    });
+                }
+                
+            });
+        }
+    });
+    return {
+        nodes: nodes,
+        edges: edges
+    }
+}
+/*function createGraphFromActeur(idActeur, nodes, edges) {
+
 
     // id en mode numérique pour les nodes
     var idActeurNum = idActeur.substring(2);
@@ -169,33 +254,40 @@ function createGraphFromActeur(idActeur, nodes, edges) {
         }
 
         var jsonStringFilm = sessionStorage.getItem(idFilmActeur);
-        var film_acteur = JSON.parse(jsonStringFilm);
 
-        if(!nodes.get(idFilmActeurNum)) {
-            if(film_acteur.Poster !== undefined) {
-                nodes.add({
-                    id: idFilmActeurNum,
-                    id_imdb: film_acteur.Id,
-                    group: 'films',
-                    label: film_acteur.Title,
-                    shape: 'circularImage',
-                    image: film_acteur.Poster
-                });
+        // Si la node du film existe
+        if (jsonStringFilm !== null){
+            var film_acteur = JSON.parse(jsonStringFilm);
+
+            if(!nodes.get(idFilmActeurNum)) {
+                if(film_acteur.Poster !== undefined) {
+                    nodes.add({
+                        id: idFilmActeurNum,
+                        id_imdb: film_acteur.Id,
+                        group: 'films',
+                        label: film_acteur.Title,
+                        shape: 'circularImage',
+                        image: film_acteur.Poster
+                    });
+                }
+                else {
+                    nodes.add({
+                        id: idFilmActeurNum,
+                        id_imdb: film_acteur.Id,
+                        group: 'films',
+                        label: film_acteur.Title,
+                    });
+                }
             }
-            else {
-                nodes.add({
-                    id: idFilmActeurNum,
-                    id_imdb: film_acteur.Id,
-                    group: 'films',
-                    label: film_acteur.Title,
-                });
-            }
+
+            edges.add({
+                from: idFilmActeurNum,
+                to: idActeurNum
+            });
+        } else {
+
         }
-
-        edges.add({
-            from: idFilmActeurNum,
-            to: idActeurNum
-        });
+        
     });
 
     return {
@@ -203,7 +295,7 @@ function createGraphFromActeur(idActeur, nodes, edges) {
         edges: edges
     }
 }
-
+*/
 function createFilmInfosHtml(json) {
     var infos = getFilmInfos(json);
     $('<h3/>', {
