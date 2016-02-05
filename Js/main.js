@@ -25,6 +25,7 @@ $(document).ready(function() {
 	    	$.ajax({
 		        url: "http://www.omdbapi.com/?t="+query+"&plot=short&r=json",
 		        crossDomain: true,
+		        global:true,
 		        dataType: "jsonp",
 		        success: function(data) {
 		        	loadIdMovie(data.imdbID, 0,  callBackActor, callBackDirector);
@@ -39,6 +40,7 @@ $(document).ready(function() {
 		        data: form.serialize(),
 		        crossDomain: true,
 		        dataType: "jsonp",
+		        global:true,
 		        success: function(data) {
 		            var acteurs = data.data.results.names;
 		            console.log(acteurs);
