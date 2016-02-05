@@ -91,3 +91,11 @@
 .result .item div:hover {
 
 }
+
+/* Canvas */
+body {
+    background: black;
+}
+canvas {
+    background: transparent;
+}

@@ -12,6 +12,7 @@
     <script type="text/javascript" src="../Js/Vis/dist/vis.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
     <link href="../Js/Vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
+    <link href="../css/main.css" rel="stylesheet" type="text/css" />
 
     <style type="text/css">
         #mynetwork {
@@ -102,10 +103,15 @@ function createNodes() {
       locale: 'en',
       interaction:{hover:true},
       clickToUse: false,
-          groups: {
-            films: {color:{background:'red'}, borderWidth:3},
-            acteurs: {color:{background:'blue'}, borderWidth:3}
-          }
+      edges: {
+          width: 3
+      },
+      groups: {
+          films_icn: {shape: 'circularImage', image: '../img/movie_img.png', color:{background:'white', border:'#D54F58'}, font:{color:"#D54F58"}, borderWidth:5},
+          acteurs_icn: {shape: 'circularImage', image: '../img/actor_img.png', color:{background:'white', border:'white'},font:{color:"white", size:13} , borderWidth:3},
+          films_img: {color:{background:'white', border:'#D54F58'}, font:{color:"#D54F58"}, borderWidth:5},
+          acteurs_img: {color:{background:'white', border:'white'},font:{color:"white", size:13} , borderWidth:3}
+      }
     }
 
     network.setOptions(options);
