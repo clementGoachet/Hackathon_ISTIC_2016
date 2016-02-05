@@ -12,6 +12,7 @@
 	<link href="css/main.css" rel="stylesheet">
 	<link href="css/superslides.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="Js/Vis/dist/vis.min.css" rel="stylesheet" type="text/css" />
 		
     <title>IMDB</title>
  </head>
@@ -80,8 +81,10 @@
 							</div>
 						</div>
 						<!-- End resu -->
+                        <button id="" type="button" class=" search_btn btn red" onClick="createNodes()">Rechercher</button>
+
 					</div>
-					<div class="col-sm-6">
+					<div class="col-sm-6" id="mynetwork">
 						<!-- TODO : nodes -->					
 						
 					</div>
@@ -103,5 +106,135 @@
 	<script type="text/javascript" src="Js/main.js"></script>
 	<script type="text/javascript" src="Js/superslides.js"></script>
 	<script type="text/javascript" src="Js/result.js"></script>
+    <script type="text/javascript" src="Js/vis_tools.js"></script>
+    <script type="text/javascript" src="Js/Vis/dist/vis.js"></script>
+
+<script type="text/javascript">
+$(this).ajaxStop(function(){
+    createNodes();
+});
+
+function createNodes() {
+    matchIdAndNameActor();
+
+    var nodesArray = [];
+    var i = 0;
+    $.each(sessionStorage, function(key, value) {
+        i++;
+        var node;
+        value = jQuery.parseJSON(value);
+        if (key.substring(0,2) == "nm"){
+            node = '{"id" :"'+value.Id+'", "group": "personne", "label": "'+value.Title+'", "shape": "circularImage", "image": "'+value.Image+'"}';
+        } else {
+            node = '{"id" :"'+value.Id+'", "group": "film", "label": "'+value.Title+'", "shape": "circularImage", "image": "'+value.Poster+'"}';
+        }
+
+        nodesArray.push(JSON.parse(node));
+    });
+    var nodes = new vis.DataSet(nodesArray);
+
+    // create an array with nodes
+
+
+    // create an array with edges
+    var edges = new vis.DataSet([
+        {from: 1, to: 3},
+        {from: 1, to: 2},
+        {from: 1, to: 4},
+        {from: 2, to: 5}
+    ]);
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+
+    // provide the data in the vis format
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+
+    var nodes = new vis.DataSet({});
+    var edges = new vis.DataSet({});
+
+/*    var data2 = createGraphFromFilm("tt0072562", nodes, edges);
+    console.log("data2")
+    console.log(data2)*/
+
+    //var data3 = createGraphFromActeur("nm0000115", nodes, edges);
+
+    var data3 = createGraphFromActeur("nm0000619", nodes, edges);
+
+    //nodesCleaned = nodes;
+    $.each(nodes, function(k, v){
+        $.each(edges, function(j, i){
+            if (i.to == k || i.from == k){
+                nodes.remove(k);
+            }
+        });
+    });
+    //nodes = nodesCleaned;
+    // initialize your network!
+    var network = new vis.Network(container, data3, options);
+
+
+    var options = {
+      autoResize: true,
+      height: '100%',
+      width: '100%',
+      locale: 'en',
+      interaction:{hover:true},
+      clickToUse: false,
+      edges: {
+          width: 2
+      },
+      groups: {
+          films_icn: {
+              shape: 'circularImage',
+              image: '../img/movie_img.png',
+              color:{background:'white', border:'#D54F58'},
+              font:{color:"#D54F58"}, borderWidth:5, borderWidthSelected: 5,
+          },
+          acteurs_icn: {
+              shape: 'circularImage',
+              image: '../img/actor_img.png',
+              color:{background:'white', border:'white'},
+              font:{color:"white", size:13} , borderWidth:3,
+          },
+          films_img: {
+              color:{background:'white', border:'#D54F58'},
+              font:{color:"#D54F58"},
+              borderWidth:5, borderWidthSelected: 5,
+          },
+          acteurs_img: {
+              color:{background:'white', border:'white'},
+              font:{color:"white", size:13} , borderWidth:3
+          }
+      }
+    }
+
+    network.setOptions(options);
+
+    network.on("selectNode", function(data) {
+        var node = data3.nodes.get(data.nodes[0]);
+        console.log(node)
+
+        if(node.group == "films_img" || node.group == "films_icn"){
+
+            $.getJSON("http://www.omdbapi.com/?i=" + node.id + "&plot=short&r=json", function(json) {
+                var items = [];
+                var infos = getFilmInfos(json);
+                $.each( infos, function( key, val ) {
+                    items.push( "<li id='" + key + "'>" + val + "</li>" );
+                });
+                $("#infos").html(items.join( "" ));
+
+             });
+        }
+    });
+
+
+}
+
+</script>
   </body>
 </html>
