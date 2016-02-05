@@ -43,9 +43,9 @@ $(document).ready(function() {
 		            var acteurs = data.data.results.names;
 		            console.log(acteurs);
 		            $(".pointer").show();
-		            $( ".pointer" ).each(function( index ) {
+		            $( ".actor_name" ).each(function( index ) {
 		            	$(this).attr("id", acteurs[0].id);
-		        		$(this).find(".actor_name").html(acteurs[0].title);
+		        		$(this).html(acteurs[0].title);
 		        		acteurs.shift();
 		        	});
 
