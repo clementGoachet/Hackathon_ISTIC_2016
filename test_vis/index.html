@@ -104,13 +104,30 @@ function createNodes() {
       interaction:{hover:true},
       clickToUse: false,
       edges: {
-          width: 3
+          width: 2
       },
       groups: {
-          films_icn: {shape: 'circularImage', image: '../img/movie_img.png', color:{background:'white', border:'#D54F58'}, font:{color:"#D54F58"}, borderWidth:5},
-          acteurs_icn: {shape: 'circularImage', image: '../img/actor_img.png', color:{background:'white', border:'white'},font:{color:"white", size:13} , borderWidth:3},
-          films_img: {color:{background:'white', border:'#D54F58'}, font:{color:"#D54F58"}, borderWidth:5},
-          acteurs_img: {color:{background:'white', border:'white'},font:{color:"white", size:13} , borderWidth:3}
+          films_icn: {
+              shape: 'circularImage',
+              image: '../img/movie_img.png',
+              color:{background:'white', border:'#D54F58'},
+              font:{color:"#D54F58"}, borderWidth:5, borderWidthSelected: 5,
+          },
+          acteurs_icn: {
+              shape: 'circularImage',
+              image: '../img/actor_img.png',
+              color:{background:'white', border:'white'},
+              font:{color:"white", size:13} , borderWidth:3,
+          },
+          films_img: {
+              color:{background:'white', border:'#D54F58'},
+              font:{color:"#D54F58"},
+              borderWidth:5, borderWidthSelected: 5,
+          },
+          acteurs_img: {
+              color:{background:'white', border:'white'},
+              font:{color:"white", size:13} , borderWidth:3
+          }
       }
     }
 
@@ -120,6 +137,7 @@ function createNodes() {
         console.log(data)
         console.log(data.nodes[0])
         var node = data3.nodes.get(data.nodes[0]);
+        console.log(node)
 
         if(node.group == "films"){
 
