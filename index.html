@@ -161,8 +161,9 @@ function createNodes() {
     console.log(data2)*/
 
     //var data3 = createGraphFromActeur("nm0000115", nodes, edges);
+    var idActeur = $(".actor_name").attr("id");
 
-    var data3 = createGraphFromActeur("nm0000619", nodes, edges);
+    var data3 = createGraphFromActeur(idActeur, nodes, edges);
 
     //nodesCleaned = nodes;
     $.each(nodes, function(k, v){
