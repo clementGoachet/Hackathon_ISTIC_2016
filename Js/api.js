@@ -12,6 +12,7 @@ function callBackActor(actor, lvl, callBackIdName){
         url: "http://imdb.wemakesites.net/api/search?q="+actor,
         crossDomain: true,
         dataType: "jsonp",
+        global:true,
         success: function(data) {
            	urlActor = data.data.results.names[0].url;
            	idActor = urlActor.split("/")[4];
@@ -27,6 +28,7 @@ function callBackDirector(director, lvl, callBackIdName){
 	$.ajax({
         url: "http://imdb.wemakesites.net/api/search?q="+director,
         crossDomain: true,
+        global:true,
         dataType: "jsonp",
         success: function(data) {
            	urlDirector = data.data.results.names[0].url;
@@ -43,6 +45,7 @@ function callBackMovie(actor, lvl, callBackMovie){
 	$.ajax({
         url: "http://imdb.wemakesites.net/api/search?q="+actor,
         crossDomain: true,
+        global:true,
         dataType: "jsonp",
         success: function(data) {
            	urlActor = data.data.results.names[0].url;
@@ -64,6 +67,7 @@ function loadIdName(id, lvl, callbackMovie) {
 	        url: "http://imdb.wemakesites.net/api/"+id,
 	        crossDomain: true,
 	        dataType: "jsonp",
+	        global:true,
 	        success: function(data) {
 	        	
 	        	films = data.data.filmography;
@@ -78,6 +82,10 @@ function loadIdName(id, lvl, callbackMovie) {
 	        	actor = jQuery.parseJSON('{"Id": "'+id+'", "Title": "'+name+'", "Image": "'+data.data.image+'", "Films":"'+idFilms+'"}');
 	        	
 	        	sessionStorage.setItem(id,JSON.stringify(actor)); // store data in browser storage
+	        	
+	        	setTimeout(function() {
+	        		$("#generate").show();
+	        	},5000);
 	        }
 	    });
 	}
@@ -90,6 +98,7 @@ function loadIdMovie(id, lvl, callbackActor, callbackDirector) {
 		 $.ajax({
 	        url: "http://www.omdbapi.com/?i="+id+"&plot=short&r=json",
 	        crossDomain: true,
+	        global:true,
 	        dataType: "jsonp",
 	        success: function(data) {
 	        	info = data;
@@ -115,6 +124,7 @@ function loadDirector(director) {
   $.ajax({
         url: "http://imdb.wemakesites.net/api/search?q="+director,
         crossDomain: true,
+        global:true,
         dataType: "jsonp",
         success: function(data) {
             recherche = data.data.results.names;
@@ -127,6 +137,7 @@ title = title.replace(/\s/g, '');
  $.ajax({
         url: "http://www.omdbapi.com/?t="+title+"&y=&plot=short&r=json",
         crossDomain: true,
+        global:true,
         dataType: "jsonp",
         success: function(data) {
         	film = data;
@@ -138,6 +149,7 @@ function loadActor(actor) {
  $.ajax({
         url: "http://imdb.wemakesites.net/api/search?q="+actor,
         crossDomain: true,
+        global:true,
         dataType: "jsonp",
         success: function(data) {
            	recherche = data.data.results.names;
