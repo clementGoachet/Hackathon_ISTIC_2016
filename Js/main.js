@@ -15,6 +15,7 @@ $(document).ready(function() {
 	$(".pointer").hide();
 
 	$('form[name="search-imdb"]').submit(function(e){
+		$(".loader").show();
 	    var form = $(this);
 	    var query = $("#film_search").val();
 	    
